@@ -1,14 +1,16 @@
 package com.tik.bfaagithubusers
 
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ListUsersAdapter(private val listUser: ArrayList<User>) :
+class ListUsersAdapter(private val listUser: List<Items>, private val ctx: Context) :
     RecyclerView.Adapter<ListUsersAdapter.ListViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
@@ -25,9 +27,12 @@ class ListUsersAdapter(private val listUser: ArrayList<User>) :
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val user = listUser[position]
-        holder.imgPhoto.setImageResource(user.avatar)
-        holder.tvName.text = user.name
-        holder.tvLocation.text = user.location
+//        holder.imgPhoto.setImageResource(user.avatar)
+        Glide.with(ctx)
+            .load(user.avatarUrl)
+            .into(holder.imgPhoto)
+        holder.tvName.text = user.login
+        holder.tvLocation.text = user.id.toString()
         holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listUser[holder.adapterPosition]) }
     }
 
@@ -40,6 +45,6 @@ class ListUsersAdapter(private val listUser: ArrayList<User>) :
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: User)
+        fun onItemClicked(data: Items)
     }
 }

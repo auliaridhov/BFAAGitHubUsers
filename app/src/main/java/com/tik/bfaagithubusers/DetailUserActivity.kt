@@ -2,36 +2,64 @@ package com.tik.bfaagithubusers
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.tik.bfaagithubusers.databinding.ActivityDetailUserBinding
+import com.tik.bfaagithubusers.databinding.ActivityMainBinding
 import de.hdodenhof.circleimageview.CircleImageView
 
 class DetailUserActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityDetailUserBinding
+    private lateinit var detailViewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_user)
 
-        val tvUserName: TextView = findViewById(R.id.tvUsername)
-        val tvName: TextView = findViewById(R.id.tvName)
-        val tvLocation: TextView = findViewById(R.id.tvLocation)
-        val tvFollowers: TextView = findViewById(R.id.tvFollowers)
-        val tvFollowing: TextView = findViewById(R.id.tvFollowing)
-        val tvRepository: TextView = findViewById(R.id.tvRepository)
-        val imgUser: CircleImageView = findViewById(R.id.imgUser)
+        val userName = intent.getStringExtra(EXTRA_USERNAME)
 
-        val user = intent.getParcelableExtra<User>(EXTRA_USER) as User
+        binding = ActivityDetailUserBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        tvUserName.text = user.username
-        tvName.text = user.name
-        tvLocation.text = user.location
-        tvFollowers.text = user.followers.toString()
-        tvFollowing.text = user.following.toString()
-        tvRepository.text = user.repository.toString()
+        detailViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(DetailViewModel::class.java)
+        detailViewModel.detailUser.observe(this, { users ->
+            setData(users)
+        })
 
-        imgUser.setImageResource(user.avatar)
+        detailViewModel.isLoading.observe(this, {
+            showLoading(it)
+        })
+
+        userName?.let { detailViewModel.getDetailUser(it) }
+    }
+
+    private  fun  setData(user: DetailUser){
+        binding.tvName.text = user.name
+        binding.tvUsername.text = user.login
+        binding.tvLocation.text = user.location
+        binding.tvFollowers.text = user.followers.toString()
+        binding.tvFollowing.text = user.following.toString()
+        binding.tvRepository.text = user.publicRepos.toString()
+        Glide.with(this)
+            .load(user.avatarUrl)
+            .into(binding.imgUser)
     }
 
     companion object {
-        const val EXTRA_USER = "extra_user"
+        const val EXTRA_USERNAME = "extra_username"
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.body.visibility = if (isLoading) View.INVISIBLE else View.VISIBLE
     }
 }
