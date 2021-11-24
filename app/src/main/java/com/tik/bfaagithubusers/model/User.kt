@@ -1,4 +1,4 @@
-package com.tik.bfaagithubusers
+package com.tik.bfaagithubusers.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

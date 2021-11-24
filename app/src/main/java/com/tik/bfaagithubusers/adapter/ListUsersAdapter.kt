@@ -1,4 +1,4 @@
-package com.tik.bfaagithubusers
+package com.tik.bfaagithubusers.adapter
 
 
 import android.content.Context
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.tik.bfaagithubusers.R
+import com.tik.bfaagithubusers.model.Items
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ListUsersAdapter(private val listUser: List<Items>, private val ctx: Context) :

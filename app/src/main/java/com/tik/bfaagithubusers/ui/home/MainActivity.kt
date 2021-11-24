@@ -1,4 +1,4 @@
-package com.tik.bfaagithubusers
+package com.tik.bfaagithubusers.ui.home
 
 import android.app.SearchManager
 import android.content.Context
@@ -11,7 +11,11 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tik.bfaagithubusers.adapter.ListUsersAdapter
+import com.tik.bfaagithubusers.R
 import com.tik.bfaagithubusers.databinding.ActivityMainBinding
+import com.tik.bfaagithubusers.model.Items
+import com.tik.bfaagithubusers.ui.detail.DetailUserActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -78,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.searchUser(query)
                 return true
             }
+
             override fun onQueryTextChange(newText: String): Boolean {
                 return false
             }

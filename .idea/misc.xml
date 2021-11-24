@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Study/Dicoding/Fundamental Aplikasi Android/BFAAGitHubUsers/app/src/main/res/layout/activity_detail_user.xml" value="0.19791666666666666" />
+        <entry key="..\:/Study/Dicoding/Fundamental Aplikasi Android/BFAAGitHubUsers/app/src/main/res/layout/activity_main.xml" value="0.2554347826086957" />
+        <entry key="..\:/Study/Dicoding/Fundamental Aplikasi Android/BFAAGitHubUsers/app/src/main/res/layout/fragment_followers.xml" value="0.2554347826086957" />
+        <entry key="..\:/Study/Dicoding/Fundamental Aplikasi Android/BFAAGitHubUsers/app/src/main/res/layout/fragment_following.xml" value="0.2554347826086957" />
         <entry key="..\:/Study/Dicoding/Fundamental Aplikasi Android/BFAAGithubUsers/app/src/main/res/layout/activity_detail_user.xml" value="0.36666666666666664" />
         <entry key="..\:/Study/Dicoding/Fundamental Aplikasi Android/BFAAGithubUsers/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
         <entry key="..\:/Study/Dicoding/Fundamental Aplikasi Android/BFAAGithubUsers/app/src/main/res/layout/item_row_user.xml" value="0.36666666666666664" />

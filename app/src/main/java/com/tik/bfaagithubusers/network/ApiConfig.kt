@@ -1,4 +1,4 @@
-package com.tik.bfaagithubusers
+package com.tik.bfaagithubusers.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -1,4 +1,4 @@
-package com.tik.bfaagithubusers
+package com.tik.bfaagithubusers.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -30,7 +30,6 @@ data class Items(
     @SerializedName("received_events_url") var receivedEventsUrl: String? = null,
     @SerializedName("type") var type: String? = null,
     @SerializedName("site_admin") var siteAdmin: Boolean? = null,
-    @SerializedName("score") var score: Int? = null
 
 )
 

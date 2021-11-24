@@ -1,42 +1,44 @@
-package com.tik.bfaagithubusers
+package com.tik.bfaagithubusers.ui.followers
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tik.bfaagithubusers.model.Items
+import com.tik.bfaagithubusers.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel : ViewModel()  {
+class FollowersViewModel  : ViewModel()  {
 
-    private val _detailUser = MutableLiveData<DetailUser>()
-    val detailUser: LiveData<DetailUser> = _detailUser
+    private val _listUsers = MutableLiveData<List<Items>>()
+    val listUsers: LiveData<List<Items>> = _listUsers
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
     companion object{
-        private const val TAG = "MainViewModel"
+        private const val TAG = "FollowersViewModel"
     }
 
-    fun getDetailUser(username: String) {
+    fun getFollowers(username: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getDetailUsers(username)
-        client.enqueue(object : Callback<DetailUser> {
+        val client = ApiConfig.getApiService().getFollowers(username)
+        client.enqueue(object : Callback<List<Items>> {
             override fun onResponse(
-                call: Call<DetailUser>,
-                response: Response<DetailUser>
+                call: Call<List<Items>>,
+                response: Response<List<Items>>
             ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
-                    _detailUser.value = response.body()
+                    _listUsers.value = response.body()
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
 
-            override fun onFailure(call: Call<DetailUser>, t: Throwable) {
+            override fun onFailure(call: Call<List<Items>>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }

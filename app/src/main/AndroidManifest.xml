@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BFAAGitHubUsers">
         <activity
-            android:name=".DetailUserActivity"
+            android:name=".ui.detail.DetailUserActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.home.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
