@@ -12,6 +12,9 @@
     <string name="search_hint">Masukkan kata</string>
     <string name="tab_text_1">Followers</string>
     <string name="tab_text_2">Following</string>
+    <string name="favorite">Favorite</string>
+    <string name="setting">Setting</string>
+    <string name="dark_mode">Dark Mode</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -1,25 +1,40 @@
 package com.tik.bfaagithubusers.ui.home
 
+import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tik.bfaagithubusers.adapter.ListUsersAdapter
 import com.tik.bfaagithubusers.R
 import com.tik.bfaagithubusers.databinding.ActivityMainBinding
+import com.tik.bfaagithubusers.helper.ViewModelFactory
 import com.tik.bfaagithubusers.model.Items
 import com.tik.bfaagithubusers.ui.detail.DetailUserActivity
+import com.tik.bfaagithubusers.ui.detail.DetailViewModel
+import com.tik.bfaagithubusers.ui.favorite.FavoriteActivity
+import com.tik.bfaagithubusers.ui.setting.SettingActivity
+import com.tik.bfaagithubusers.ui.setting.SettingViewModel
+import com.tik.bfaagithubusers.utils.SettingPreferences
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var settingViewModel: SettingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +48,18 @@ class MainActivity : AppCompatActivity() {
             this,
             ViewModelProvider.NewInstanceFactory()
         ).get(MainViewModel::class.java)
+
+
+        settingViewModel = obtainViewModel(this)
+
+        settingViewModel.getThemeSettings().observe(this,
+            { isDarkModeActive: Boolean ->
+                if (isDarkModeActive) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+            })
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvUsers.layoutManager = layoutManager
@@ -90,9 +117,35 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.fav -> moveFav(FavoriteActivity::class.java)
+            R.id.setting -> moveSetting(SettingActivity::class.java)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun moveSetting(java: Class<SettingActivity>) {
+        val intent = Intent(this@MainActivity, java)
+        startActivity(intent)
+    }
+
+    private fun moveFav(java: Class<FavoriteActivity>) {
+        val intent = Intent(this@MainActivity, java)
+        startActivity(intent)
+    }
+
+
     private fun showSelectedHero(user: Items) {
         val moveWithDataIntent = Intent(this@MainActivity, DetailUserActivity::class.java)
         moveWithDataIntent.putExtra(DetailUserActivity.EXTRA_USERNAME, user.login)
         startActivity(moveWithDataIntent)
+    }
+
+
+    private fun obtainViewModel(activity: AppCompatActivity): SettingViewModel {
+        val pref = SettingPreferences.getInstance(dataStore)
+        val factory = ViewModelFactory.getInstance(activity.application, pref)
+        return ViewModelProvider(activity, factory).get(SettingViewModel::class.java)
     }
 }

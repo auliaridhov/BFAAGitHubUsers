@@ -6,4 +6,9 @@
     <color name="grey">#EDEDED</color>
     <color name="darkgrey">#444444</color>
     <color name="darkgrey2">#171717</color>
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>
